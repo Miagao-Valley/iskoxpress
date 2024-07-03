@@ -1,7 +1,7 @@
 import React from 'react'
 import { auth, logOut } from '../../auth/firebaseUtil'
 
-const UserPage = ({}) => {
+const UserSetup = ({}) => {
 
   const user = auth.currentUser
 
@@ -13,4 +13,4 @@ const UserPage = ({}) => {
   )
 }
 
-export default UserPage
+export default UserSetup

@@ -5,6 +5,7 @@ import UserPage from "./components/pages/UserSetup";
 import { Routes, Route } from "react-router-dom";
 import UserRouting from "./auth/UserRouting";
 import { AuthStateChangeHandler } from "./auth/firebaseUtil";
+import UserSetup from "./components/pages/UserSetup";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
 
         {/*private pages*/}
         <Route element={<UserRouting />}>
-          <Route path="/userPage" element={<UserPage />} />
+          <Route path="/userPage" element={<UserSetup />} />
         </Route>
       </Routes>
     </>
