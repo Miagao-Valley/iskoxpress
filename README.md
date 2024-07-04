@@ -15,6 +15,10 @@ A web application exclusive for UPV Students (for now) for them to express their
 2. Install dependencies:
 ```
  npm install
+ npm install firebase
+
+ since we are using vite:
+  follow along the documentation for tailwind css: https://tailwindcss.com/docs/guides/vite
  ```
 
 ## 🧞 Usage
