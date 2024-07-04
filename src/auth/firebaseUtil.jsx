@@ -1,9 +1,10 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
-  signInWithRedirect,
+  signInWithPopup,
   GoogleAuthProvider,
   signOut,
+  signInWithRedirect,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -16,38 +17,31 @@ const firebase = {
   appId: "1:547003784449:web:432a75c6a935409541cf00",
   measurementId: "G-XC2M0ZZ7W2",
 };
+initializeApp(firebase);
 
-export const app = initializeApp(firebase);
 export const auth = getAuth();
-export const googleProvider = new GoogleAuthProvider();
 
 export const logIn = () => {
-  // makes sure the users signs in with a up mail.
-  googleProvider.setCustomParameters({
-    hd: "up.edu.ph",
-    prompt: "select_account",
-  });
+  const googleProvider = new GoogleAuthProvider();
+  googleProvider.setCustomParameters(
+    { prompt: "select_account" 
 
-  signInWithRedirect(auth, googleProvider);
+    });
+  signInWithPopup(auth, googleProvider);
 };
 
-export const AuthStateChangeHandler = () => {
-  const navigate = useNavigate();
+auth.onAuthStateChanged((user)=>{
+  if (user){
+    console.log(user.email)
+  } else {
+    console.log("signed-out");
+  }
+})
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      console.log(user.email);
-      navigate("/userPage"); 
-    } else {
-      console.log("signed-out!");
-    }
-  });
-
-  return null;
-};
 
 export const logOut = () => {
   signOut(auth);
 };
+
 
 

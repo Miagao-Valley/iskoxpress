@@ -1,6 +1,8 @@
 import React from "react";
 import "../components/css/login.css";
-import { logIn } from "./firebaseUtil.jsx";
+import { logIn } from "./firebaseUtil";
+
+
 
 const LoginPage = () => {
   return (
