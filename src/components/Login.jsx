@@ -1,17 +1,41 @@
 import React from "react";
-import "../components/css/login.css";
-import { logIn } from "./firebaseUtil";
+import "../index.css";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase/auth";
 
+const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope("https://www.googleapis.com/auth/userinfo.email");
 
+googleProvider.setCustomParameters({
+  hd: "up.edu.ph",
+});
 
-const LoginPage = () => {
+const Login = () => {
+  function handleGoogleLogin() {
+    signInWithPopup(auth, googleProvider);
+
+  }
+
+  const navigate = useNavigate();
+
+  auth.onAuthStateChanged((user) => {
+    if (!user) {
+      console.log("Signed out")
+      navigate("/");
+    } else {
+      console.log(user.email)
+      navigate("setup");
+    }
+  });
+
   return (
     <div className="text-center pt-5">
       <h1 className="font-bold font-mono pt-52 text-6xl">IskoXpress</h1>
       <h2 className="font-medium">express your thoughts exclusively </h2>
       <div className="flex items-center justify-center pt-3">
         <button
-          onClick={logIn}
+          onClick={handleGoogleLogin}
           className="flex items-center bg-white dark:bg-gray-900 border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 dark:text-white hover:bg-red-400 "
         >
           <svg
@@ -77,4 +101,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

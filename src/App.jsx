@@ -1,18 +1,19 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import ErrorPage from "./components/pages/ErrorPage";
-import LoginPage from "./auth/LoginPage";
-import { Routes, Route } from "react-router-dom";
-import UserSetup from "./components/pages/UserSetup"
+import Login from "./components/Login";
+import Setup from "./components/Setup";
+import Error from "./components/Error";
 
 
 function App() {
+
+
   return (
     <>
       <Routes>
-        {/*public pages*/}
-        <Route path="/" element={<LoginPage />} />
-        <Route path="*" element={<ErrorPage />} />
-        <Route path="/userSetup" element={<UserSetup/>} />
+        <Route path="/" element={<Login />} />
+        <Route path="setup" element={<Setup />} />
+        <Route path="*" element={<Error/>} />
       </Routes>
     </>
   );
