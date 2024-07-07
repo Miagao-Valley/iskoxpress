@@ -15,6 +15,10 @@ A web application exclusive for UPV Students (for now) for them to express their
 2. Install dependencies:
 ```
  npm install
+ npm install firebase
+
+ since we are using vite:
+  follow along the documentation for tailwind css: https://tailwindcss.com/docs/guides/vite
  ```
 
 ## 🧞 Usage
@@ -48,7 +52,4 @@ Use the issue tracker to find ways to contribute. Find a bug or a feature, menti
 This project belongs to the open-source community named Miagao Valley 🇵🇭. We have interesting projects you might want to check out 👀. Visit our community [here](https://discord.gg/BzhUm6k4z7)!
 
 ![Miagao Valley Logo-04](https://github.com/Miagao-Valley/mv-site/assets/113810517/d92a2263-b553-4939-b946-ac8997ca407b)
-
-## 📚 License
-[MIT](https://choosealicense.com/licenses/mit/)
 
