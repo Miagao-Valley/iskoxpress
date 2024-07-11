@@ -1,33 +1,31 @@
 import React from "react";
 import "../index.css";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { doc } from "firebase/firestore";
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope("https://www.googleapis.com/auth/userinfo.email");
 
 googleProvider.setCustomParameters({
-  hd: "up.edu.ph",
+  prompt: 'select_account',
 });
 
 const Login = () => {
-  function handleGoogleLogin() {
-    signInWithPopup(auth, googleProvider);
-
-  }
-
+  
   const navigate = useNavigate();
 
-  auth.onAuthStateChanged((user) => {
-    if (!user) {
-      console.log("Signed out")
-      navigate("/");
-    } else {
-      console.log(user.email)
-      navigate("setup");
+  async function handleGoogleLogin() {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate('/setup');
+    } catch (error) {
+      console.log(error)
     }
-  });
+  }
+
+
 
   return (
     <div className="text-center pt-5">
