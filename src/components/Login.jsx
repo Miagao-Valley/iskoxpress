@@ -3,7 +3,7 @@ import "../index.css";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { doc } from "firebase/firestore";
+
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope("https://www.googleapis.com/auth/userinfo.email");
