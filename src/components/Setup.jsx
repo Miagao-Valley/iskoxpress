@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth";
 import { db } from "../firebase/db";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc} from "firebase/firestore";
 
 import Error from "./Error";
 import WelcomeUser from "./WelcomeUser";
