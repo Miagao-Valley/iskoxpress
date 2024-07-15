@@ -5,7 +5,7 @@ A web application exclusive for UPV Students (for now) for them to express their
 ## 💻 Technology stack
 - React (Vite)
 - Tailwind CSS
-- Firebase/Supabase (TBA)
+- Firebase
 
 ## 🔌 Installation
 1. Clone the repository:
