@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth";
 import { db } from "../firebase/db";
-import { doc, getDoc} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 import Error from "./Error";
 import WelcomeUser from "./WelcomeUser";
 
-import Loader from "./Loader";
+import Loader2 from "./loaders/Loader2";
 
 const Setup = () => {
   const navigate = useNavigate();
@@ -37,24 +37,18 @@ const Setup = () => {
     })();
   }, [user, navigate]);
 
-
-
   if (isError) {
     return <Error />;
   }
 
   if (isLoading || checkingUser) {
-    return (
-      <Loader/>
-    );
+    return <Loader2 />;
   }
-
-
 
   return (
     <>
       <div className="h-screen flex items-center justify-center">
-        <WelcomeUser userId={user.uid}/>
+        <WelcomeUser userId={user.uid} />
       </div>
     </>
   );

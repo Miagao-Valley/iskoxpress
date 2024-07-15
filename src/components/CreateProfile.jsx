@@ -3,8 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import PlaceHolder from "../assets/placeholder.jpg";
 import { doc, setDoc } from "firebase/firestore";
 import Error from "./Error";
-import Loader from "./Loader";
+import Loader from "./loaders/Loader";
 import { db } from "../firebase/db";
+import UploadImage from "./buttons/UploadImage";
+import CommonButton from "./buttons/CommonButton";
+import Input from "./inputs/Input";
 
 const CreateProfile = () => {
   const location = useLocation();
@@ -33,6 +36,7 @@ const CreateProfile = () => {
       setIsLoading(false);
       navigate("/home");
     } catch (error) {
+      setIsError(true)
       console.log(error);
     }
   }
@@ -45,53 +49,41 @@ const CreateProfile = () => {
     );
   }
 
-  if (isLoading){
-    return <Loader/>
+  if (isLoading) {
+    return <Loader />;
   }
 
   return (
     <div className="flex flex-col justify-center place-items-center h-screen items-center ">
       <div className="text-center mb-5">
         <div className="flex flex-col justify-center place-items-center relative">
-          <button>
-            <img
-              src={profile}
-              alt="Profile"
-              className="h-60 w-60 rounded-full mt-2 my-2 animate-fade"
-              onClick={() => profileUploadRef.current.click()}
-            />
-          </button>
-          <input
-            type="file"
-            ref={profileUploadRef}
-            accept="image/jpeg"
-            onChange={(e) => {
+          <UploadImage
+            imgSrc={profile}
+            onButtonClick={() => profileUploadRef.current.click()}
+          />
+          <Input
+            inputType={"file"}
+            inputRef={profileUploadRef}
+            inputAccept={"image/jpeg"}
+            onInputChange={(e) => {
               const file = e.target.files[0];
               if (file && file.type === "image/jpeg") {
                 setProfile(URL.createObjectURL(file));
               }
             }}
-            hidden
+            isHidden={"hidden"}
           />
           {!isProfileEmpty && (
             <>
               <div className="flex gap-2">
-                <button
-                  className="animate-fade cursor-pointer transition-all bg-black text-white px-4 py-2
-              border-black rounded-md border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
-              active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-                  onClick={() => setProfile(PlaceHolder)}
-                >
-                  Clear
-                </button>
-                <button
-                  className="animate-fade cursor-pointer transition-all bg-black text-white px-4 py-2
-              border-black rounded-md border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
-              active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
-                  onClick={() => createUser(handle, profile, userId)}
-                >
-                  Create Profile
-                </button>
+                <CommonButton
+                  onButtonClick={() => setProfile(PlaceHolder)}
+                  text={"Clear"}
+                />
+                <CommonButton
+                  onButtonClick={() => createUser(handle, profile, userId)}
+                  text={"Create Profile"}
+                />
               </div>
             </>
           )}
