@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GoogleSignUpButton = ({onButtonClick}) => {
+const GoogleButton = ({onButtonClick, text}) => {
   return (
     <button
       onClick={onButtonClick}
@@ -51,9 +51,9 @@ const GoogleSignUpButton = ({onButtonClick}) => {
           </g>
         </g>
       </svg>
-      <span>Sign up with your UP mail</span>
+      <span>{text}</span>
     </button>
   );
 }
 
-export default GoogleSignUpButton
+export default GoogleButton

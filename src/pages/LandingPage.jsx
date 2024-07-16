@@ -4,15 +4,17 @@ import { auth } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 import person from "../assets/SVG/Astro.svg";
-import GoogleSignUpButton from "../components/buttons/GoogleSignUpButton";
+import GoogleButton from "../components/buttons/GoogleButton";
 import CreateAccountButton from "../components/buttons/CreateAccountButton";
 import SignInButton from "../components/buttons/SignInButton";
 import Footer from "../components/Footer";
 import SignUpModal from "../components/modals/SignUpModal";
 import { useState } from "react";
 import LogInModal from "../components/modals/LogInModal";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/db";
 
-const googleProvider = new GoogleAuthProvider();
+export const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope("https://www.googleapis.com/auth/userinfo.email");
 
 googleProvider.setCustomParameters({
@@ -20,13 +22,15 @@ googleProvider.setCustomParameters({
 });
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-  const [openModal, setOpenModal] = useState(false);
 
-  async function handleGoogleLogin() {
+  const [openSignup, setSignup] = useState(false);
+  const [openLogin, setLogin] = useState(false);
+
+  async function handleGoogleSignUp() {
     try {
       await signInWithPopup(auth, googleProvider);
-      navigate("/setup");
+      const userRef = doc(db, "users", email);
+      await setDoc(userRef, {});
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +87,10 @@ const LandingPage = () => {
             {/* Sign-up section */}
 
             <div className="sm:mt-28">
-              <GoogleSignUpButton onButtonClick={handleGoogleLogin} />
+              <GoogleButton
+                onButtonClick={handleGoogleSignUp}
+                text="Sign up with your UP Mail"
+              />
               <div className="relative flex items-center py-3">
                 <div className="flex-grow border-t border-black"></div>
                 <span className="flex-shrink mx-5 text-black font-mono">
@@ -93,9 +100,9 @@ const LandingPage = () => {
               </div>
               <CreateAccountButton
                 text={"Create account"}
-                onButtonClick={() => setOpenModal(true)}
+                onButtonClick={() => setSignup(true)}
               />
-              <SignUpModal openModal={openModal} setOpenModal={setOpenModal} />
+              <SignUpModal openModal={openSignup} setOpenModal={setSignup} />
             </div>
           </div>
 
@@ -108,9 +115,9 @@ const LandingPage = () => {
               </h2>
               <SignInButton
                 text={"Sign in"}
-                onButtonClick={() => setOpenModal(true)}
+                onButtonClick={() => setLogin(true)}
               />
-
+              <LogInModal openModal={openLogin} setOpenModal={setLogin} />
             </div>
           </div>
         </section>
