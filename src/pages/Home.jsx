@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/auth";
 import { signOut } from "firebase/auth";
+import Loader3 from "../components/loaders/Loader3";
+import { Sidebar } from "flowbite-react";
+import { IoHome, IoNotifications, IoSettings } from "react-icons/io5";
+import { CiSettings } from "react-icons/ci";
 
 const Home = () => {
-  
   const navigate = useNavigate();
-  const [user, loading] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
+  const [isLoading, setIsLoading] = useState(true);
+  const [value, setValue] = useState("home");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, [loading]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   async function handleSignOut() {
     try {
@@ -19,20 +34,39 @@ const Home = () => {
     }
   }
 
-  if (loading){
-    return <h1>Loading...</h1>
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <Loader3 />
+      </div>
+    );
   }
 
-  return(
-    <div className="text-center">
-        hello {user.displayName}
-        <br />
-        <button type="button" className="bg-red-400" onClick={handleSignOut}>Logout</button>
-    </div>
-  )
-    
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        {error.message}
+      </div>
+    );
+  }
 
-
+  return (
+    <>
+      <Sidebar>
+        <Sidebar.Items className="bg-black ">
+          <Sidebar.ItemGroup>
+            <Sidebar.Item icon={IoHome} className="text-white">
+              Home
+            </Sidebar.Item>
+            <Sidebar.Item icon={IoNotifications} className="text-white">
+              Notifications
+            </Sidebar.Item>
+            <Sidebar.Item icon={CiSettings} className="text-white">Settings</Sidebar.Item>
+          </Sidebar.ItemGroup>
+        </Sidebar.Items>
+      </Sidebar>
+    </>
+  );
 };
 
 export default Home;

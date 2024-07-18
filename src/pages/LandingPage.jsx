@@ -36,6 +36,14 @@ const LandingPage = () => {
     }
   }
 
+  auth.onAuthStateChanged((user)=>{
+    if(user){
+      console.log(user.email)
+    } else {
+      console.log("signed-out!")
+    }
+  })
+
   return (
     <>
       <div className="sm:grid-cols-2 grid animate-fade h-screen">

@@ -63,7 +63,7 @@ const SignUpModal = ({ openModal, setOpenModal }) => {
 
   if (isCreatingAcc) {
     return (
-      <Modal show={openModal} size="md" popup>
+      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
           <Loader3 />
