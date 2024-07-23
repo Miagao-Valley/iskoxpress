@@ -2,39 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/auth";
-import { signOut } from "firebase/auth";
 import Loader3 from "../components/loaders/Loader3";
-import { Sidebar } from "flowbite-react";
-import { IoHome, IoNotifications, IoSettings } from "react-icons/io5";
-import { CiSettings } from "react-icons/ci";
+
+import BottomNav from "../components/BottomNav";
+import Posts from "../components/Posts";
+import TopNav from "../components/TopNav";
 
 const Home = () => {
-  const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
-  const [isLoading, setIsLoading] = useState(true);
-  const [value, setValue] = useState("home");
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [loading]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  async function handleSignOut() {
-    try {
-      alert("signed out");
-      await signOut(auth);
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <Loader3 />
@@ -52,19 +29,17 @@ const Home = () => {
 
   return (
     <>
-      <Sidebar>
-        <Sidebar.Items className="bg-black ">
-          <Sidebar.ItemGroup>
-            <Sidebar.Item icon={IoHome} className="text-white">
-              Home
-            </Sidebar.Item>
-            <Sidebar.Item icon={IoNotifications} className="text-white">
-              Notifications
-            </Sidebar.Item>
-            <Sidebar.Item icon={CiSettings} className="text-white">Settings</Sidebar.Item>
-          </Sidebar.ItemGroup>
-        </Sidebar.Items>
-      </Sidebar>
+      <div>
+        <div className="mobile:p-10">
+          <TopNav user={user} />
+          <section className="mt-10">
+            <Posts user={user} />
+          </section>
+          <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <BottomNav user={user} />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
