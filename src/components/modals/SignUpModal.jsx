@@ -37,10 +37,10 @@ const SignUpModal = ({ openModal, setOpenModal }) => {
   async function handleEmailSignUp(email, password) {
     try {
       setIsCreatingAcc(true);
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
       const userRef = doc(db, "users", email);
       await setDoc(userRef, {
-
+        userId: userCred.user.uid
       })
       setIsCreated(true);
       setIsCreatingAcc(false);

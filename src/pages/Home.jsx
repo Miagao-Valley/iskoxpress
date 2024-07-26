@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/auth";
 import Loader3 from "../components/loaders/Loader3";
-
 import BottomNav from "../components/BottomNav";
 import Posts from "../components/Posts";
 import TopNav from "../components/TopNav";
 
 const Home = () => {
+  
   const [user, loading, error] = useAuthState(auth);
 
   if (loading) {
@@ -29,7 +28,7 @@ const Home = () => {
 
   return (
     <>
-      <div>
+      <div className="animate-fade">
         <div className="mobile:p-10">
           <TopNav user={user} />
           <section className="mt-10">
