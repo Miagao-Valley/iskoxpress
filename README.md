@@ -3,8 +3,9 @@
 A web application exclusive for UPV Students (for now) for them to express their thoughts.
 
 ## 💻 Technology stack
-- React (Vite)
-- Tailwind CSS
+- React (Next.js)
+- Zod
+- TypeScript
 - Firebase
 
 ## 🔌 Installation
