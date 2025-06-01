@@ -1,6 +1,6 @@
 # 🎓 IskoXpress
 
-A web application exclusive for UPV Students (for now) for them to express their thoughts.
+IskoXpress is a web application designed for UP students. It aims to provide a platform for students to share and engage with their thoughts, ideas, and experiences.
 
 ## 💻 Technology stack
 - React (Next.js)
