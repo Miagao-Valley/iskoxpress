@@ -1,7 +1,7 @@
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { app } from "./app";
-import { SetUpUserRequestType } from "@/types/user";
-import { GenericResponseMessage } from "@/types/response";
+import { SetUpUserRequestType } from "../types/user";
+import { GenericResponseMessage } from "../types/response";
 
 const functions = getFunctions(app, "asia-southeast1");
 
