@@ -1,12 +1,9 @@
-import { Box, Text } from "@chakra-ui/react";
-import { ColorModeButton } from "@/components/ui/color-mode";
+import { Box } from "@chakra-ui/react";
 
 export default function HomePage() {
     return (
         <>
-            <Box>
-                
-            </Box>
+            <Box></Box>
         </>
     );
 }
