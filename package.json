@@ -10,17 +10,16 @@
     "format": "prettier --write .",
     "prepare": "husky install"
   },
-"lint-staged": {
-  "*.{js,jsx,ts,tsx}": [
-    "eslint --fix",
-    "prettier --write",
-    "git add"
-  ],
-  "*.{css,md,json,svg}": [
-    "prettier --write",
-    "git add"
-  ]
-},
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.tsx": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@chakra-ui/react": "^3.19.2",
     "@emotion/react": "^11.14.0",
