@@ -1,6 +1,6 @@
-import { MAX_CAPTION_LENGTH } from '@/constants/post';
-import {z} from 'zod';
-import { CommentSchema } from './comment';
+import { MAX_CAPTION_LENGTH } from "@/constants/post";
+import { z } from "zod";
+import { CommentSchema } from "./comment";
 
 export const PostSchema = z.object({
     postId: z.string().min(1),
@@ -19,3 +19,17 @@ export const PostSchema = z.object({
 });
 
 export type PostType = z.infer<typeof PostSchema>;
+
+export const PostFormSchema = PostSchema.omit({
+    postId: true,
+    posterId: true,
+    likes: true,
+    comments: true,
+    dateCreated: true,
+    dateUpdated: true,
+    isDeleted: true,
+    reExpressedBy: true,
+    originalPostId: true,
+});
+
+export type PostFormType = z.infer<typeof PostFormSchema>;
