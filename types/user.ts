@@ -1,3 +1,4 @@
+import { MAX_BIO_LENGTH } from "@/constants/user";
 import { z } from "zod";
 
 export const UserDataSchema = z.object({
@@ -8,7 +9,10 @@ export const UserDataSchema = z.object({
         .trim()
         .min(1, { message: "Name is required" })
         .max(100, { message: "Name can only be 100 letters long." }),
-    imageUrl: z.string().url().nullable(),
+    profileImageUrl: z.string().url().nullable().optional(),
+    headerImageUrl: z.string().url().nullable().optional(),
+    userName: z.string().min(3).max(15),
+    bio: z.string().max(MAX_BIO_LENGTH).optional(),
     dateCreated: z.string().datetime(),
     dateUpdated: z.string().datetime(),
     isSetup: z.boolean(),
@@ -17,6 +21,7 @@ export const UserDataSchema = z.object({
 export type UserDataType = z.infer<typeof UserDataSchema>;
 
 export const SetUpUserRequestSchema = UserDataSchema.omit({
+    name: true,
     email: true,
     id: true,
     dateCreated: true,
@@ -24,3 +29,14 @@ export const SetUpUserRequestSchema = UserDataSchema.omit({
     isSetup: true,
 });
 export type SetUpUserRequestType = z.infer<typeof SetUpUserRequestSchema>;
+
+export const EditUserProfileSchema = UserDataSchema.omit({
+    name: true,
+    email: true,
+    id: true,
+    dateCreated: true,
+    dateUpdated: true,
+    isSetup: true,
+});
+
+export type EditUserType = z.infer<typeof EditUserProfileSchema>;
