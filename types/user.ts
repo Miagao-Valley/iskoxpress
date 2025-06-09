@@ -20,6 +20,14 @@ export const UserDataSchema = z.object({
 
 export type UserDataType = z.infer<typeof UserDataSchema>;
 
+export const PreUserSchema = UserDataSchema.omit({
+    userName: true,
+    headerImageUrl: true,
+    bio: true,
+});
+
+export type PreUserType = z.infer<typeof PreUserSchema>;
+
 export const SetUpUserRequestSchema = UserDataSchema.omit({
     name: true,
     email: true,
