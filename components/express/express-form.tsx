@@ -13,13 +13,12 @@ import {
     FileUploadRoot,
     FileUploadHiddenInput,
     FileUploadTrigger,
-    Image,
 } from "@chakra-ui/react";
-import { LuX } from "react-icons/lu";
 import { RiGalleryLine } from "react-icons/ri";
 import { PostFormSchema, PostFormType } from "@/types/post";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ImagePreview from "./image-preview";
 
 export default function ExpressForm() {
     const { setValue, register, handleSubmit, watch, reset } =
@@ -70,41 +69,10 @@ export default function ExpressForm() {
                         autoresize
                         size="md"
                     />
-                    {imgUrls.length > 0 && (
-                        <Flex wrap="wrap" gap={2} mt={3}>
-                            {imgUrls.map((url, index) => (
-                                <Box
-                                    key={index}
-                                    boxSize="100px"
-                                    borderRadius="md"
-                                    overflow="hidden"
-                                    position="relative"
-                                >
-                                    <Image
-                                        src={url}
-                                        alt={`preview-${index}`}
-                                        w="100%"
-                                        h="100%"
-                                        objectFit="cover"
-                                    />
-                                    <IconButton
-                                        size="2xs"
-                                        variant="ghost"
-                                        aria-label="remove-image"
-                                        position="absolute"
-                                        top="2px"
-                                        right="2px"
-                                        bg="whiteAlpha.800"
-                                        borderRadius="full"
-                                        _hover={{ bg: "whiteAlpha.900" }}
-                                        onClick={() => handleRemoveImage(index)}
-                                    >
-                                        <LuX />
-                                    </IconButton>
-                                </Box>
-                            ))}
-                        </Flex>
-                    )}
+                    <ImagePreview
+                        imgUrls={imgUrls}
+                        onClick={handleRemoveImage}
+                    />
                     <Separator my={3} ml={3} borderColor="gray.600" />
                     <Flex justify="space-between" align="center" mt="10px">
                         <Flex gap={2} ml={3}>
