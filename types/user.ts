@@ -13,6 +13,8 @@ export const UserDataSchema = z.object({
     headerImageUrl: z.string().url().nullable().optional(),
     userName: z.string().min(3).max(15),
     bio: z.string().max(MAX_BIO_LENGTH).optional(),
+    location: z.string().optional(),
+    website: z.string().optional(),
     dateCreated: z.string().datetime(),
     dateUpdated: z.string().datetime(),
     isSetup: z.boolean(),
@@ -47,4 +49,4 @@ export const EditUserProfileSchema = UserDataSchema.omit({
     isSetup: true,
 });
 
-export type EditUserType = z.infer<typeof EditUserProfileSchema>;
+export type EditUserFormType = z.infer<typeof EditUserProfileSchema>;
