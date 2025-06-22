@@ -15,19 +15,34 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import { FiCamera } from "react-icons/fi";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EditUserProfileSchema, EditUserType } from "@/types/user";
 
-export default function EditProfileDialog({
-    isOpen,
-    onClose,
-}: {
+interface EditProfileDialogProps {
     isOpen: boolean;
     onClose: () => void;
-}) {
-    const [name, setName] = useState("Freak Bob");
-    const [bio, setBio] = useState("Biooo");
-    const [location, setLocation] = useState("UPV");
-    const [website, setWebsite] = useState("guthib.com");
+}
+
+export default function EditProfileDialog(props: EditProfileDialogProps) {
+    const { isOpen, onClose } = props;
+
+    const { register, handleSubmit } = useForm<EditUserType>({
+        resolver: zodResolver(EditUserProfileSchema),
+        defaultValues: {
+            userName: "",
+            profileImageUrl: null,
+            headerImageUrl: null,
+            bio: "",
+            location: "",
+            website: "",
+        },
+    });
+
+    const onSubmit = (data: EditUserType) => {
+        console.log("Submitted data:", data);
+        onClose();
+    };
 
     return (
         <Dialog.Root open={isOpen} onOpenChange={onClose}>
@@ -41,7 +56,6 @@ export default function EditProfileDialog({
                         maxW="xl"
                         w="full"
                     >
-                        {/* modal header */}
                         <Flex
                             align="center"
                             justify="space-between"
@@ -61,14 +75,13 @@ export default function EditProfileDialog({
                                 size="sm"
                                 borderRadius="full"
                                 colorScheme="blue"
-                                onClick={onClose}
+                                onClick={handleSubmit(onSubmit)}
                             >
                                 Save
                             </Button>
                         </Flex>
 
                         <Dialog.Body px={0}>
-                            {/* header image */}
                             <Box position="relative" h="120px" bg="gray.700">
                                 <Image
                                     src="/sample-header.jpg"
@@ -91,7 +104,6 @@ export default function EditProfileDialog({
                                 </IconButton>
                             </Box>
 
-                            {/* profile pivture */}
                             <Box
                                 px={4}
                                 mt={-8}
@@ -99,7 +111,7 @@ export default function EditProfileDialog({
                                 w="fit-content"
                             >
                                 <Avatar.Root size="xl">
-                                    <Avatar.Fallback name={name} />
+                                    <Avatar.Fallback name="User" />
                                     <Avatar.Image src="/sample-avatar.jpg" />
                                 </Avatar.Root>
                                 <IconButton
@@ -116,69 +128,55 @@ export default function EditProfileDialog({
                                 </IconButton>
                             </Box>
 
-                            {/* form fields */}
                             <VStack px={4} mt={4} pb={6}>
-                                {[
-                                    {
-                                        label: "Name",
-                                        value: name,
-                                        setter: setName,
-                                    },
-                                    {
-                                        label: "Bio",
-                                        value: bio,
-                                        setter: setBio,
-                                        isTextArea: true,
-                                    },
-                                    {
-                                        label: "Location",
-                                        value: location,
-                                        setter: setLocation,
-                                    },
-                                    {
-                                        label: "Website",
-                                        value: website,
-                                        setter: setWebsite,
-                                    },
-                                ].map(
-                                    ({ label, value, setter, isTextArea }) => (
-                                        <Box w="full" key={label}>
-                                            <Text
-                                                fontSize="sm"
-                                                color="gray.400"
-                                                mb={1}
-                                            >
-                                                {label}
-                                            </Text>
-                                            {isTextArea ? (
-                                                <Textarea
-                                                    value={value}
-                                                    onChange={(e) =>
-                                                        setter(e.target.value)
-                                                    }
-                                                    bg="gray.800"
-                                                    border="none"
-                                                    resize="none"
-                                                    _focus={{
-                                                        border: "1px solid white",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <Input
-                                                    value={value}
-                                                    onChange={(e) =>
-                                                        setter(e.target.value)
-                                                    }
-                                                    bg="gray.800"
-                                                    border="none"
-                                                    _focus={{
-                                                        border: "1px solid white",
-                                                    }}
-                                                />
-                                            )}
-                                        </Box>
-                                    ),
-                                )}
+                                <Box w="full">
+                                    <Text fontSize="sm" color="gray.400" mb={1}>
+                                        Name
+                                    </Text>
+                                    <Input
+                                        {...register("userName")}
+                                        bg="gray.800"
+                                        border="none"
+                                        _focus={{ border: "1px solid white" }}
+                                    />
+                                </Box>
+
+                                <Box w="full">
+                                    <Text fontSize="sm" color="gray.400" mb={1}>
+                                        Bio
+                                    </Text>
+                                    <Textarea
+                                        {...register("bio")}
+                                        bg="gray.800"
+                                        border="none"
+                                        resize="none"
+                                        _focus={{ border: "1px solid white" }}
+                                    />
+                                </Box>
+
+                                <Box w="full">
+                                    <Text fontSize="sm" color="gray.400" mb={1}>
+                                        Location
+                                    </Text>
+                                    <Input
+                                        {...register("location")}
+                                        bg="gray.800"
+                                        border="none"
+                                        _focus={{ border: "1px solid white" }}
+                                    />
+                                </Box>
+
+                                <Box w="full">
+                                    <Text fontSize="sm" color="gray.400" mb={1}>
+                                        Website
+                                    </Text>
+                                    <Input
+                                        {...register("website")}
+                                        bg="gray.800"
+                                        border="none"
+                                        _focus={{ border: "1px solid white" }}
+                                    />
+                                </Box>
                             </VStack>
                         </Dialog.Body>
                     </Dialog.Content>

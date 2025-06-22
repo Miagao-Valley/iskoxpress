@@ -16,6 +16,9 @@ export const UserDataSchema = z.object({
     dateCreated: z.string().datetime(),
     dateUpdated: z.string().datetime(),
     isSetup: z.boolean(),
+
+    location: z.string().optional(),
+    website: z.string().optional(),
 });
 
 export type UserDataType = z.infer<typeof UserDataSchema>;
@@ -39,9 +42,9 @@ export const SetUpUserRequestSchema = UserDataSchema.omit({
 export type SetUpUserRequestType = z.infer<typeof SetUpUserRequestSchema>;
 
 export const EditUserProfileSchema = UserDataSchema.omit({
+    id: true,
     name: true,
     email: true,
-    id: true,
     dateCreated: true,
     dateUpdated: true,
     isSetup: true,
