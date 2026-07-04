@@ -50,5 +50,11 @@
     "prettier-plugin-tailwindcss": "^0.6.12",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "brace-expansion": "^2.0.1",
+    "next": {
+      "postcss": "^8.5.10"
+    }
   }
 }
